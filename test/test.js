@@ -7,7 +7,7 @@ var should = require('should'),
     geoip = require('../lib/geoip');
 
 
-xdescribe('geo ip test', function () {
+describe('geo ip test', function () {
 
     it('Chinese ipv4 address', function (done) {
         var ip4 = '124.160.214.66';
