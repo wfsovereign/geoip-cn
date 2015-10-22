@@ -7,7 +7,7 @@ var should = require('should'),
     geoip = require('../lib/geoip');
 
 
-describe('geo ip test', function () {
+xdescribe('geo ip test', function () {
 
     it('Chinese ipv4 address', function (done) {
         var ip4 = '124.160.214.66';
@@ -143,3 +143,113 @@ describe('geo ip test', function () {
     });
 });
 
+
+describe('占用堆栈空间大小', function () {
+    this.timeout(30 * 1000);
+    it('获取一次此对象占用空间 小于10mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        var geoIp = require('../lib/geoip');
+        var actualInfo = geoIp.lookup('2001:4860:b002::68');
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(10);
+        used = '' + used + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+
+
+    it('获取一次此对象占用空间 小于1mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        console.log('申请空间原始大小:', '' + (used1 / 1000000) + 'MB');
+        var geoIp = require('../lib/geoip');
+        var actualInfo = geoIp.lookup('2001:4860:b002::68');
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(1);
+        used = '' + used.toFixed(2) + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+
+
+    it('获取100次此对象占用空间 小于5mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        console.log('申请空间原始大小:', '' + (used1 / 1000000) + 'MB');
+        var geoIp = require('../lib/geoip'), actualArray = [];
+        for (var i = 0; i < 100; i++) {
+            actualArray.push(geoIp.lookup('2001:4860:b002::68'));
+        }
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(5);
+        used = '' + used.toFixed(2) + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+
+    it('获取1000次此对象占用空间 小于10mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        console.log('申请空间原始大小:', '' + (used1 / 1000000) + 'MB');
+        var geoIp = require('../lib/geoip'), actualArray = [];
+        for (var i = 0; i < 1000; i++) {
+            actualArray.push(geoIp.lookup('2001:4860:b002::68'));
+        }
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(10);
+        used = '' + used.toFixed(2) + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+
+
+    it('获取10000次此对象占用空间 小于35mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        console.log('申请空间原始大小:', '' + (used1 / 1000000) + 'MB');
+        var geoIp = require('../lib/geoip'), actualArray = [];
+        for (var i = 0; i < 10000; i++) {
+            actualArray.push(geoIp.lookup('2001:4860:b002::68'));
+        }
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(35);
+        used = '' + used.toFixed(2) + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+
+
+    it('获取100000次此对象占用空间 小于80mb', function (done) {
+        console.time('time');
+        var used1, used2;
+        used1 = process.memoryUsage().heapTotal;
+        console.log('申请空间原始大小:', '' + (used1 / 1000000) + 'MB');
+        var geoIp = require('../lib/geoip'), actualArray = [];
+        for (var i = 0; i < 100000; i++) {
+            actualArray.push(geoIp.lookup('2001:4860:b002::68'));
+        }
+        used2 = process.memoryUsage().heapTotal;
+        var used = (used2 - used1) / (1000 * 1000);
+        used.should.be.below(80);
+        used = '' + used.toFixed(2) + 'MB';
+        console.log('处理之后所占空间大小:' + used);
+        console.timeEnd('time');
+        done();
+    });
+});
