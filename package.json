@@ -1,6 +1,6 @@
 {
   "name": "geoip-cn",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A light weight native JavaScript implementation of GeoIP API from MaxMind,and result add ChineseName",
   "keywords": [
     "geo",

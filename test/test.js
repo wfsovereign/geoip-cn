@@ -7,7 +7,7 @@ var should = require('should'),
     geoip = require('../lib/geoip');
 
 
-describe('geo ip test', function () {
+xdescribe('geo ip test', function () {
 
     it('Chinese ipv4 address', function (done) {
         var ip4 = '124.160.214.66';
@@ -141,10 +141,25 @@ describe('geo ip test', function () {
         should(actualInfo.ChineseName).eql('美国');
         done();
     });
+
+
+});
+describe('------------------------------', function(){
+    it('American ipv6 address test!!!!', function (done) {
+        var ip6 = '"::ffff:192.168.42.1';
+        var actualInfo = geoip.lookup(ip6);
+        console.log(actualInfo);
+        console.log('-------------------');
+        should.exist(actualInfo);
+        should(actualInfo.country).eql('US');
+        should(actualInfo.ChineseName).eql('美国');
+        done();
+    });
+
 });
 
 
-describe('占用堆栈空间大小', function () {
+xdescribe('占用堆栈空间大小', function () {
     this.timeout(30 * 1000);
     it('获取一次此对象占用空间 小于10mb', function (done) {
         console.time('time');

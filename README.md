@@ -6,7 +6,7 @@ GeoIP-CN
 > 测试所用ip地址均为网上搜索所得，侵删
 
 ### 安装
-> npm install geoip-cn    //暂不支持安装，正在运行试验中
+> npm install geoip-cn    
 
 ### 使用
 ``` javascript
